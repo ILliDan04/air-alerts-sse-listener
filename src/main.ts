@@ -35,11 +35,10 @@ const seedAlerts = async () => {
     });
     for await (const record of reverseRecords) {
       try {
-        const apiAlertRecord = apiAlertRepo.create(record);
         await apiAlertRepo.save({
-          alert: apiAlertRecord.alert,
-          date: apiAlertRecord.date,
-          state_id: apiAlertRecord.state_id,
+          alert: record.alert,
+          state_id: record.state_id,
+          date: record.date,
         });
       } catch (error) {
         continue;
@@ -65,9 +64,9 @@ const bootstrap = async () => {
       },
     });
 
-    sse.addEventListener("open", () => {
+    sse.addEventListener("open", async () => {
       console.log(`~~~~~~~ SERVER SIDE EVENT LISTENER OPENED ~~~~~~~`);
-      seedAlerts();
+      await seedAlerts();
     });
 
     sse.addEventListener("error", (data) => {
@@ -76,13 +75,12 @@ const bootstrap = async () => {
 
     sse.addEventListener("update", async (data) => {
       const { state }: DataResponse = JSON.parse(data.data);
-      const record = apiAlertRepo.create({
-        state_id: state.id,
-        alert: state.alert,
-        date: state.changed,
-      });
       try {
-        await apiAlertRepo.save(record);
+        await apiAlertRepo.save({
+          alert: state.alert,
+          date: state.changed,
+          state_id: state.id,
+        });
       } catch (error) {
         console.log("~~~Update error: ", error);
         return;
