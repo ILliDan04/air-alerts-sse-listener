@@ -42,7 +42,7 @@ jobs:
       - name: Deploy Docker image to EC2 instance
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.EC2_INSTANCE_HOST }}
-          docker stop air-alerts-sse-listener || true
-          docker rm air-alerts-sse-listener || true
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/air-alerts-sse-listener:latest
-          docker run -d --name air-alerts-sse-listener -e PORT=${{ secrets.APP_PORT }} -e DATABASE_URL=${{ secrets.APP_DATABASE_URL }} -e AIR_ALERT_API_URL=${{ secrets.APP_AIR_ALERT_API_URL }} -e AIR_ALERT_API_ACCESS_KEY=${{ secrets.APP_AIR_ALERT_API_ACCESS_KEY }} -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/air-alerts-sse-listener:latest
+          sudo docker stop air-alerts-sse-listener || true
+          sudo docker rm air-alerts-sse-listener || true
+          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/air-alerts-sse-listener:latest
+          sudo docker run -d --name air-alerts-sse-listener -e PORT=${{ secrets.APP_PORT }} -e DATABASE_URL=${{ secrets.APP_DATABASE_URL }} -e AIR_ALERT_API_URL=${{ secrets.APP_AIR_ALERT_API_URL }} -e AIR_ALERT_API_ACCESS_KEY=${{ secrets.APP_AIR_ALERT_API_ACCESS_KEY }} -p ${{ secrets.APP_PORT }}:${{ secrets.APP_PORT }} ${{ secrets.DOCKERHUB_USERNAME }}/air-alerts-sse-listener:latest
