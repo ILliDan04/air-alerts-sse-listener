@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "outDir": "build",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -26,6 +26,6 @@
       "module": "CommonJS"
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }
