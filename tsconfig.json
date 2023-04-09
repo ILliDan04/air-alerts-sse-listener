@@ -1,25 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es5",
     "outDir": "build",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
+    "target": "ES2015",
+    "module": "commonjs",
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
     "experimentalDecorators": true,
-    "strictPropertyInitialization": false,
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false
   },
   "ts-node": {
     "compilerOptions": {
