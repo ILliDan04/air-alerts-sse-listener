@@ -36,12 +36,12 @@ jobs:
       - name: Copy SSH private key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" >> ~/.ssh/id_rsa
           chmod 400 ~/.ssh/id_rsa
           
       - name: Deploy Docker image to EC2 instance
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_INSTANCE_HOST }}
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.EC2_INSTANCE_HOST }}
           docker stop air-alerts-sse-listener || true
           docker rm air-alerts-sse-listener || true
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/air-alerts-sse-listener:latest
