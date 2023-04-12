@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import ApiAlert from "./ApiAlert";
 import config from "../config";
+import Alert from "./Alert";
 
 let AppDataSource: DataSource | null = null;
 
@@ -11,7 +12,7 @@ const getDB = async () => {
       url: config.DATABASE_URL,
       logging: ["info"],
       synchronize: false,
-      entities: [ApiAlert],
+      entities: [ApiAlert, Alert],
     });
   }
   if (!AppDataSource.isInitialized) {
