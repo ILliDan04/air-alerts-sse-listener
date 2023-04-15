@@ -48,12 +48,25 @@ export const mergeAlerts = async () => {
     // MERGE THE API_ALERTS TO ALERTS
     for await (const record of response) {
       try {
-        await em.insert(Alert, {
-          region_id: record.region_id,
-          date_start: record.date_start,
-          date_end: record.date_end,
+        const alertToInsert = new Alert();
+        alertToInsert.region_id = record.region_id;
+        alertToInsert.date_start = new Date(record.date_start);
+        alertToInsert.date_end = new Date(record.date_end);
+
+        const exist = await em.exists(Alert, {
+          where: {
+            region_id: alertToInsert.region_id,
+            date_start: alertToInsert.date_start,
+            date_end: alertToInsert.date_end,
+          },
         });
+        if (exist) {
+          continue;
+        }
+        await em.insert(Alert, alertToInsert);
       } catch (error) {
+        console.log("~~~Error inserting records: ", error);
+
         continue;
       }
     }
