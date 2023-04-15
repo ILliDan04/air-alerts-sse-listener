@@ -32,6 +32,12 @@ const bootstrap = async () => {
     sse.addEventListener("open", async () => {
       console.log(`~~~~~~~ SERVER SIDE EVENT LISTENER OPENED ~~~~~~~`);
       await seedAlerts();
+      try {
+        await mergeAlerts();
+        console.log("~~~Initial merge is done~~~");
+      } catch (error) {
+        console.log("~~~Initial merge has failed: ", error);
+      }
     });
 
     sse.addEventListener("error", (data) => {
